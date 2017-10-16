@@ -1,0 +1,51 @@
+[
+    {
+        "startTime": "2017-02-06T00:00:00+08:00",
+        "endTime": "2017-02-06T17:08:24+08:00",
+        "drilledFootage": 114.0927999999999,
+        "footageUnit": "m",
+        "rop": 9.433704954179003,
+        "ropUnit": "m/h"
+    },
+    {
+        "startTime": "2017-02-05T00:00:00+08:00",
+        "endTime": "2017-02-06T00:00:00+08:00",
+        "drilledFootage": 165.28099999999995,
+        "footageUnit": "m",
+        "rop": 8.3651286377056078,
+        "ropUnit": "m/h"
+    },
+    {
+        "startTime": "2017-02-04T00:00:00+08:00",
+        "endTime": "2017-02-05T00:00:00+08:00",
+        "drilledFootage": 256.76960000000008,
+        "footageUnit": "m",
+        "rop": 11.294022432372998,
+        "ropUnit": "m/h"
+    },
+    {
+        "startTime": "2017-02-03T00:00:00+08:00",
+        "endTime": "2017-02-04T00:00:00+08:00",
+        "drilledFootage": 661.18429999999989,
+        "footageUnit": "m",
+        "rop": 27.54934583333333,
+        "ropUnit": "m/h"
+    },
+    {
+        "startTime": "2017-02-02T00:00:00+08:00",
+        "endTime": "2017-02-03T00:00:00+08:00",
+        "drilledFootage": 786.6400000000001,
+        "footageUnit": "m",
+        "rop": 34.137422247938673,
+        "ropUnit": "m/h"
+    },
+    {
+        "startTime": "2017-02-01T00:00:00+08:00",
+        "endTime": "2017-02-02T00:00:00+08:00",
+        "drilledFootage": 13.22829999999999,
+        "footageUnit": "m",
+        "rop": -999.25,
+        "ropUnit": "m/h",
+        "message": "No Drilling Time in 8b496689-9e0c-457f-a3e3-ca7a1cdb05c1.00000000-0000-0000-0000-000000000000 from 1/31/2017 4:00:00 PM to 2/1/2017 4:00:00 PM"
+    }
+]

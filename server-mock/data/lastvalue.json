@@ -1,0 +1,28 @@
+{
+    "lastValues": [
+        {
+            "mnemonic": "DepthMonitoring.RBD",
+            "value": {
+                "time": "2017-02-06T09:08:27Z",
+                "value": -999.25,
+                "values": null
+            }
+        },
+        {
+            "mnemonic": "DrillBoreHole.TD",
+            "value": {
+                "time": "2017-02-06T09:08:27Z",
+                "value": -999.25,
+                "values": null
+            }
+        },
+        {
+            "mnemonic": "DepthMonitoring.ACTIVITY",
+            "value": {
+                "time": "2017-02-06T09:08:27Z",
+                "value": -999.25,
+                "values": null
+            }
+        }
+    ]
+}

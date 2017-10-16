@@ -1,0 +1,106 @@
+{
+    "links": {
+        "self": "https://core-safe-sf02.westus.cloudapp.azure.com:32130/alerts?query.wellId=78206d6a-2e58-4c1e-8685-f0267ceee7c8"
+    },
+    "value": [
+        {
+            "uuid": "18206d6a-2e58-4c1e-8685-f0267ceee7c8",
+            "type": "Footage",
+            "wellId": "78206d6a-2e58-4c1e-8685-f0267ceee7c8",
+            "source": "Rhapsody",
+            "severity": "Low",
+            "state": "AckAlarm",
+            "createdTime": "2017-09-01T11:21:42.104Z",
+            "lastUpdatedTime": "2017-09-12T06:20:40.215Z",
+            "content": "Daily footage not on track"
+        },
+        {
+            "uuid": "28206d6a-2e58-4c1e-8685-f0267ceee7c8",
+            "type": "Stuck Pipe",
+            "wellId": "78206d6a-2e58-4c1e-8685-f0267ceee7c8",
+            "source": "Rhapsody",
+            "severity": "High",
+            "state": "AckAlarm",
+            "createdTime": "2017-05-19T23:30:42.104Z",
+            "lastUpdatedTime": "2017-09-12T06:20:56.921Z",
+            "content": "Stuck pipe detected on Wisconsin, America"
+        },
+        {
+            "uuid": "38206d6a-2e58-4c1e-8685-f0267ceee7c8",
+            "type": "Footage",
+            "wellId": "78206d6a-2e58-4c1e-8685-f0267ceee7c8",
+            "source": "Rhapsody",
+            "severity": "Medium",
+            "state": "AckAlarm",
+            "createdTime": "2017-05-18T23:30:42.104Z",
+            "lastUpdatedTime": "2017-09-12T06:21:08.194Z",
+            "content": "Daily Footage not on track"
+        },
+        {
+            "uuid": "48206d6a-2e58-4c1e-8685-f0267ceee7c8",
+            "type": "Stuck Pipe",
+            "wellId": "78206d6a-2e58-4c1e-8685-f0267ceee7c8",
+            "source": "Rhapsody",
+            "severity": "High",
+            "state": "AckAlarm",
+            "createdTime": "2017-05-18T21:10:42.104Z",
+            "lastUpdatedTime": "2017-09-12T06:21:12.857Z",
+            "content": "Stuck pipe detected on Wisconsin, America"
+        },
+        {
+            "uuid": "58206d6a-2e58-4c1e-8685-f0267ceee7c8",
+            "type": "Stuck Pipe",
+            "wellId": "78206d6a-2e58-4c1e-8685-f0267ceee7c8",
+            "source": "Rhapsody",
+            "severity": "High",
+            "state": "UnackAlarm",
+            "createdTime": "2017-05-18T22:10:42.104Z",
+            "lastUpdatedTime": "2017-09-12T06:01:24.743Z",
+            "content": "Stuck pipe detected on Wisconsin, America"
+        },
+        {
+            "uuid": "68206d6a-2e58-4c1e-8685-f0267ceee7c8",
+            "type": "Stuck Pipe",
+            "wellId": "78206d6a-2e58-4c1e-8685-f0267ceee7c8",
+            "source": "Rhapsody",
+            "severity": "High",
+            "state": "AckAlarm",
+            "createdTime": "2017-05-18T23:10:42.104Z",
+            "lastUpdatedTime": "2017-09-19T06:20:53.797Z",
+            "content": "Stuck pipe detected on Wisconsin, America"
+        },
+        {
+            "uuid": "78206d6a-2e58-4c1e-8685-f0267ceee7c8",
+            "type": "Stuck Pipe",
+            "wellId": "78206d6a-2e58-4c1e-8685-f0267ceee7c8",
+            "source": "Rhapsody",
+            "severity": "Medium",
+            "state": "AckAlarm",
+            "createdTime": "2017-05-20T23:10:42.104Z",
+            "lastUpdatedTime": "2017-09-12T06:20:52.029Z",
+            "content": "Stuck pipe detected on Wisconsin, America"
+        },
+        {
+            "uuid": "88206d6a-2e58-4c1e-8685-f0267ceee7c8",
+            "type": "Footage",
+            "wellId": "78206d6a-2e58-4c1e-8685-f0267ceee7c8",
+            "source": "Rhapsody",
+            "severity": "Medium",
+            "state": "AckAlarm",
+            "createdTime": "2017-05-21T23:10:42.104Z",
+            "lastUpdatedTime": "2017-09-12T06:20:47.233Z",
+            "content": "Daily Footage not on track"
+        },
+        {
+            "uuid": "98206d6a-2e58-4c1e-8685-f0267ceee7c8",
+            "type": "Footage",
+            "wellId": "78206d6a-2e58-4c1e-8685-f0267ceee7c8",
+            "source": "Rhapsody",
+            "severity": "High",
+            "state": "AckAlarm",
+            "createdTime": "2017-05-21T23:10:42.104Z",
+            "lastUpdatedTime": "2017-09-12T05:56:46.149Z",
+            "content": "Daily Footage not on track"
+        }
+    ]
+}

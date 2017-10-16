@@ -1,0 +1,22 @@
+{
+    "value": [
+        {
+            "name": "TripOut",
+            "value": 6,
+            "state": "g",
+            "startTime": "2017-02-01T02:14:09Z"
+        },
+        {
+            "name": "Connection",
+            "value": 3,
+            "state": "d",
+            "startTime": "2017-02-01T02:15:30Z"
+        },
+        {
+            "name": "TripOut",
+            "value": 6,
+            "state": "g",
+            "startTime": "2017-02-01T02:17:33Z"
+        }
+    ]
+}

@@ -1,0 +1,83 @@
+{
+    "wellId": "834d2d76-c36b-4bf6-92c7-2bcfe5f3fcd1",
+    "data": [
+        {
+            "id": "1e1ca1a2-ad6f-414e-a003-8dee73462e25",
+            "state": "Historical",
+            "sectionType": "Vertical",
+            "holeSize": "13.5",
+            "targetFootage": "2600",
+            "targetAverageRop": "",
+            "targetOnBottomRop": "110",
+            "inclination": "",
+            "startDate": "2017-09-19T17:27:11.743+08:00",
+            "endDate": "2017-09-19T17:27:11.743+08:00",
+            "lastUpdate": "2017-09-19T09:27:10.728Z"
+        },
+        {
+            "id": "63cf8ed1-d5fa-4be2-b95b-d94d4bbebc5c",
+            "state": "Historical",
+            "sectionType": "Vertical",
+            "holeSize": "11.5",
+            "targetFootage": "2400",
+            "targetAverageRop": "",
+            "targetOnBottomRop": "100",
+            "inclination": "",
+            "startDate": "2017-09-19T17:27:12.743+08:00",
+            "endDate": "2017-09-19T17:27:12.743+08:00",
+            "lastUpdate": "2017-09-19T09:27:10.728Z"
+        },
+        {
+            "id": "097adf49-ea37-4411-bdb8-e7b3eb902451",
+            "state": "Active",
+            "sectionType": "Vertical",
+            "holeSize": "17.5",
+            "targetFootage": "3000",
+            "targetAverageRop": "",
+            "targetOnBottomRop": "120",
+            "inclination": "",
+            "startDate": "2017-09-19T17:27:10.743+08:00",
+            "endDate": "9000-12-31T23:59:59+08:00",
+            "lastUpdate": "2017-09-19T09:27:10.728Z"
+        },
+        {
+            "id": "9c518508-ad45-4703-b7a1-063da7cb07d2",
+            "state": "Inactive",
+            "sectionType": "Curve",
+            "holeSize": "9.5",
+            "targetFootage": "2000",
+            "targetAverageRop": "",
+            "targetOnBottomRop": "90",
+            "inclination": "",
+            "startDate": "2017-09-19T17:27:13.743+08:00",
+            "endDate": "2017-09-19T17:27:13.743+08:00",
+            "lastUpdate": "2017-09-19T09:27:10.728Z"
+        },
+        {
+            "id": "75ef2d7f-bb0f-4a51-b943-0d35460c94ff",
+            "state": "Inactive",
+            "sectionType": "Curve",
+            "holeSize": "8.5",
+            "targetFootage": "2000",
+            "targetAverageRop": "",
+            "targetOnBottomRop": "90",
+            "inclination": "",
+            "startDate": "2017-09-19T17:27:14.743+08:00",
+            "endDate": "2017-09-19T17:27:14.743+08:00",
+            "lastUpdate": "2017-09-19T09:27:10.728Z"
+        },
+        {
+            "id": "e73487f1-aa35-486e-90a0-2195120f5b02",
+            "state": "Inactive",
+            "sectionType": "Lateral",
+            "holeSize": "6.75",
+            "targetFootage": "1200",
+            "targetAverageRop": "",
+            "targetOnBottomRop": "50",
+            "inclination": "",
+            "startDate": "2017-09-19T17:27:15.743+08:00",
+            "endDate": "2017-09-19T17:27:15.743+08:00",
+            "lastUpdate": "2017-09-19T09:27:10.728Z"
+        }
+    ]
+}

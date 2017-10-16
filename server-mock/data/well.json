@@ -1,0 +1,5 @@
+{
+    "contentType": "application/x-witsml+xml;version=2.0;type=Well",
+    "data": "<?xml version=\"1.0\" encoding=\"UTF-8\"?><witsml:Well uuid=\"8b496689-9e0c-457f-a3e3-ca7a1cdb05c1\" schemaVersion=\"\" xsi:schemaLocation=\"http://www.energistics.org/energyml/data/witsmlv2 Well.xsd\" xmlns:eml=\"http://www.energistics.org/energyml/data/commonv2\" xmlns:witsml=\"http://www.energistics.org/energyml/data/witsmlv2\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"><eml:Citation><eml:Title>YWang67_CN0005PRISM036_csim_well_17-Aug-23-10-28-57</eml:Title><eml:Originator>schlumberger</eml:Originator><eml:Creation>2017-08-23T10:29:04Z</eml:Creation><eml:Format></eml:Format></eml:Citation><witsml:TimeZone>+08:00</witsml:TimeZone></witsml:Well>",
+    "streamingState": "ready"
+}

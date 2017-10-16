@@ -1,0 +1,26 @@
+{
+  "version": "1.0.0",
+  "name": "prism.rhapsody.kpidashboard",
+  "private": true,
+  "scripts": {
+    "postinstall": "npm run server:install && npm run client:install",
+    "client:install": "cd client && npm install",
+    "server:install": "cd server && npm install",
+    "lint": "cd client && npm run lint",
+    "clean": "node client/node_modules/rimraf/bin  server/public && node client/node_modules/rimraf/bin pkg && node client/node_modules/rimraf/bin ut && node client/node_modules/rimraf/bin bin",
+    "start": "node server/startup",
+    "build:vue":"cd client-v && npm run build",
+    "build": "npm run clean && npm run build:aot ",
+    "build:dev": "npm run clean && cd client && npm run build:jit:dev",
+    "build:aot": "node client/node_modules/rimraf/bin server/public && node client/node_modules/rimraf/bin bin/aot && cd client && npm run build:aot",
+    "wait:start": "node client/node_modules/wait-on/bin/wait-on server/public/app-main.js && npm start",
+    "wait:opn": "node client/node_modules/wait-on/bin/wait-on tcp:5000 && npm run opn",
+    "debug": "npm run clean && node client/node_modules/concurrently/src/main.js --raw \"cd client && npm run build:watch\" \"npm run wait:start\" \"npm run wait:opn\"",
+    "prod": "npm run build && npm start",
+    "dev": "npm run clean && node client/node_modules/concurrently/src/main.js --raw \"cd client && npm run build:watch\" \"npm run wait:mock\" \"npm run wait:opn\"",
+    "wait:mock": "node client/node_modules/wait-on/bin/wait-on server/public/app-main.js && node server-mock/mockstartup.js",
+    "test": "node client/node_modules/rimraf/bin ut && cd client && npm test",
+    "pkg": "node client/node_modules/rimraf/bin pkg && node client/node_modules/ncp/bin/ncp server pkg && node client/node_modules/rimraf/bin pkg/package*.json",
+    "opn": "node client/node_modules/opn-cli/cli \"http://localhost:5000/performance?wellID=%RHAPSODY_DEBUG_TEST_WELLID%&wellboreID=00000000-0000-0000-0000-000000000000\""
+  }
+}
