@@ -1,5 +1,4 @@
-const nprequire = require('./mockrequire');
-const express = nprequire('express');
+const express = require(__dirname + '/../../server/node_modules/express');
 const router = express.Router();
 const path = require('path');
 const mockdb = require('./data');
@@ -70,20 +69,6 @@ router.get('/signalr/*', function (req, res) {
     return res.json({
         message: 'not support signalR'
     })
-});
-
-
-
-router.get('/credits', function (req, res) {
-    res.sendFile(path.join(__dirname, '../server/public/credits.html'));
-});
-
-router.get('*', function (req, res, next) {
-    if (req.headers.accept && req.headers.accept.indexOf('text/html') !== -1) {
-        res.sendFile(path.join(__dirname, '../server/public/index.html'));
-    } else {
-        next();
-    }
 });
 
 module.exports = router;
