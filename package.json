@@ -11,5 +11,6 @@
     "debug": "cd client-v && npm run dev",
     "mock": "cd client-v && npm run mock",
     "test": "cd client-v && npm test"
-  }
+  },
+  "devDependencies": {}
 }
