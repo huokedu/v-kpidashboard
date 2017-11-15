@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="title">{{title}}</div>
-        <router-link to="/qcview">Go to QC</router-link>
+        <router-link :to="{ path: 'qcview', query: $route.query}">Go to QC</router-link>
     </div>
 </template>
 <script>

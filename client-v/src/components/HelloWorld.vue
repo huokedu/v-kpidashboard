@@ -18,6 +18,7 @@
       <li><a href="https://github.com/vuejs/awesome-vue" target="_blank">awesome-vue</a></li>
       <li><router-link to="/performance">Go to Performance</router-link></li>
     </ul>
+    <router-link :to="{ path: 'performance', query: $route.query}">Go to Performance</router-link>
   </div>
 </template>
 

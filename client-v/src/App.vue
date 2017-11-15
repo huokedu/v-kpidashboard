@@ -1,13 +1,13 @@
 <template>
   <div id="app">
     <img src="./assets/logo.png">
-    <div>{{appsettings}}</div>
+    <div></div>
     <router-view/>
   </div>
 </template>
 
 <script>
-import http from './services/http'
+
 export default {
   name: 'app',
   data () {
@@ -15,8 +15,24 @@ export default {
       appsettings: ''
     }
   },
+  computed: {
+    settings () {
+      return Object.keys(this.$store.getters.settings).length > 0
+        ? this.$store.getters.settings
+        : ''
+    }
+  },
+
   mounted () {
-    http.getAppSettings()
+    this.$store.dispatch('getAppSettings')
+  },
+
+  watch: {
+    '$route' (to, from) {
+      console.log(to)
+      console.log(from)
+      console.log(this.$route.query)
+    }
   }
 }
 </script>
