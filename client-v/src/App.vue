@@ -7,24 +7,31 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+import axios from 'axios'
 
 export default {
   name: 'app',
   data () {
     return {
-      appsettings: ''
+      appsettings: this.$store.getters.settings
     }
   },
   computed: {
-    settings () {
-      return Object.keys(this.$store.getters.settings).length > 0
-        ? this.$store.getters.settings
-        : ''
-    }
+    ...mapGetters([
+      'settings'
+    ])
   },
 
   mounted () {
-    this.$store.dispatch('getAppSettings')
+    console.log('app mounted')
+    // this.$store.dispatch('getAppSettings')
+    axios
+        .get('/api/appsettings')
+        .then(res => {
+          this.$bus.emit(this.E_APPSETTINGS, res.data)
+        })
+        .catch(err => console.log(err))
   },
 
   watch: {
@@ -32,6 +39,12 @@ export default {
       console.log(to)
       console.log(from)
       console.log(this.$route.query)
+    },
+
+    settings (val) {
+      val.wellID = this.$route.query.wellID || val.debugWellID
+      val.wellboreID = this.$route.query.wellboreID
+      console.log(val)
     }
   }
 }

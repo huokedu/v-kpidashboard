@@ -23,12 +23,21 @@
 </template>
 
 <script>
+
 export default {
   name: 'HelloWorld',
   data () {
     return {
       msg: 'Welcome to Your Vue.js App'
     }
+  },
+  mounted () {
+    console.log('qcview mounted')
+    console.log(this.$bus)
+    console.log(this.E_APPSETTINGS)
+    this.$bus.on(this.E_APPSETTINGS, function (settings) {
+      console.log(settings)
+    })
   }
 }
 </script>

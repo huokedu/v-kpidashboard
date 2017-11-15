@@ -11,7 +11,12 @@ export default new Vuex.Store({
   },
 
   getters: {
-    settings: state => { return { ...state.appsettings, ...state.urlparams } }
+    settings: state => {
+      if (Object.keys(state.appsettings).length) {
+        return { ...state.appsettings, ...state.urlparams }
+      }
+      return ''
+    }
   },
 
   mutations: {
