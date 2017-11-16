@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import PerformanceView from '@/views/Performance-view'
-import QCView from '@/views/qc-view'
+import PerformanceView from '@/views/PerformanceView'
+import QCView from '@/views/QCView'
 
 Vue.use(Router)
 

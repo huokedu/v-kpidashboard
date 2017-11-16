@@ -1,21 +1,34 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
-    <div>{{content}}</div>
-    <keep-alive>
-      <router-view/>
-    </keep-alive>
+    <side-bar></side-bar>
+    <div class="main-content">
+      <header-bar></header-bar>
+      <div class="view-content">
+        <keep-alive>
+          <router-view></router-view>
+        </keep-alive>
+      </div>
+      <footer-bar></footer-bar>
+    </div>
   </div>
 </template>
 
 <script>
-
+import HeaderBar from '@/components/HeaderBar'
+import SideBar from '@/components/SideBar'
+import FooterBar from '@/components/FooterBar'
 export default {
   name: 'app',
   data () {
     return {
       content: 'app root'
     }
+  },
+
+  components: {
+    HeaderBar,
+    SideBar,
+    FooterBar
   },
 
   mounted () {
@@ -25,13 +38,33 @@ export default {
 }
 </script>
 
-<style>
-#app {
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+<style lang="scss">
+  $topbarHeight: 56px;
+  $bottombarHeight: 56px;
+  $sidebarWidth: 56px;
+  #app {
+    font-family: "Avenir", Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    background: #ebeaec;
+  }
+
+  .main-content{
+    height: 100%;
+    width: calc(100% - #{$sidebarWidth} );
+  }
+
+  .view-content{
+    height: calc(100% - #{$topbarHeight} - #{$bottombarHeight});
+    overflow-y: auto;
+    background: white;
+  }
 </style>
