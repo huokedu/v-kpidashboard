@@ -6,7 +6,6 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
 
 export default {
   name: 'performance-view',
@@ -16,25 +15,13 @@ export default {
     }
   },
 
-  computed: {
-    ...mapGetters([
-      'settings'
-    ])
-  },
-
   mounted () {
     console.log('peroformance mounted')
     console.log(this.$bus)
-    console.log(this.E_APPSETTINGS)
-    this.$bus.on(this.E_APPSETTINGS, function (settings) {
+    console.log(this.E_SETTINGS)
+    this.$bus.on(this.E_SETTINGS, function (settings) {
       console.log(settings)
     })
-  },
-
-  watch: {
-    'settings' (settings) {
-      console.log('perf', settings)
-    }
   }
 }
 </script>

@@ -8,7 +8,6 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import axios from 'axios'
 
 export default {
   name: 'app',
@@ -25,26 +24,12 @@ export default {
 
   mounted () {
     console.log('app mounted')
-    // this.$store.dispatch('getAppSettings')
-    axios
-        .get('/api/appsettings')
-        .then(res => {
-          this.$bus.emit(this.E_APPSETTINGS, res.data)
-        })
-        .catch(err => console.log(err))
+    this.$store.dispatch('getSettings', { $route: this.$route })
   },
 
   watch: {
-    '$route' (to, from) {
-      console.log(to)
-      console.log(from)
-      console.log(this.$route.query)
-    },
-
     settings (val) {
-      val.wellID = this.$route.query.wellID || val.debugWellID
-      val.wellboreID = this.$route.query.wellboreID
-      console.log(val)
+      this.$bus.emit(this.E_SETTINGS, val)
     }
   }
 }

@@ -6,37 +6,40 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    appsettings: {},
-    urlparams: {}
+    appSettings: {}
   },
 
   getters: {
     settings: state => {
-      if (Object.keys(state.appsettings).length) {
-        return { ...state.appsettings, ...state.urlparams }
+      if (Object.keys(state.appSettings).length) {
+        return { ...state.appSettings }
       }
       return ''
     }
   },
 
   mutations: {
-    updateAppSettings (state, appsettings) {
-      state.appsettings = { ...state.appsettings, ...appsettings }
-    },
-
-    updateURLParams (state, urlparams) {
-      state.urlparams = { ...state.urlparams, ...urlparams }
+    updateSettings (state, settings) {
+      state.appSettings = { ...state.appSettings, ...settings }
     }
   },
 
   actions: {
-    getAppSettings (context) {
+    getSettings (context, payload) {
+      let wellID = ''
+      let wellboreID = ''
+      if (payload && payload.$route) {
+        wellID = payload.$route.query.wellID || wellID
+        wellboreID = payload.$route.query.wellboreID || wellboreID
+      }
       axios
-        .get('/api/appsettings')
-        .then(res => {
-          context.commit('updateAppSettings', res.data)
-        })
-        .catch(err => console.log(err))
+      .get('/api/appsettings')
+      .then(res => {
+        res.data.wellID = wellID || res.data.debugWellID
+        res.data.wellboreID = wellboreID || ''
+        context.commit('updateSettings', res.data)
+      })
+      .catch(err => console.log(err))
     }
   }
 })

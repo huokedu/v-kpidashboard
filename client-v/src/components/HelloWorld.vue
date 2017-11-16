@@ -34,8 +34,8 @@ export default {
   mounted () {
     console.log('qcview mounted')
     console.log(this.$bus)
-    console.log(this.E_APPSETTINGS)
-    this.$bus.on(this.E_APPSETTINGS, function (settings) {
+    console.log(this.E_SETTINGS)
+    this.$bus.on(this.E_SETTINGS, function (settings) {
       console.log(settings)
     })
   }
