@@ -17,9 +17,7 @@ export default {
 
   mounted () {
     console.log('peroformance mounted')
-    console.log(this.$bus)
-    console.log(this.E_SETTINGS)
-    this.$bus.on(this.E_SETTINGS, function (settings) {
+    this.$bus.on(this.$bus.E_SETTINGS, function (settings) {
       console.log(settings)
     })
   }

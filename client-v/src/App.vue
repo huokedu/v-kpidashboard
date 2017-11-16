@@ -1,36 +1,24 @@
 <template>
   <div id="app">
     <img src="./assets/logo.png">
-    <div></div>
+    <div>{{content}}</div>
     <router-view/>
   </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
 
 export default {
   name: 'app',
   data () {
     return {
-      appsettings: this.$store.getters.settings
+      content: 'app root'
     }
-  },
-  computed: {
-    ...mapGetters([
-      'settings'
-    ])
   },
 
   mounted () {
     console.log('app mounted')
-    this.$store.dispatch('getSettings', { $route: this.$route })
-  },
-
-  watch: {
-    settings (val) {
-      this.$bus.emit(this.E_SETTINGS, val)
-    }
+    this.$store.dispatch('getSettings', { $route: this.$route, $bus: this.$bus })
   }
 }
 </script>

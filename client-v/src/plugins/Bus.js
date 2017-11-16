@@ -3,6 +3,6 @@ export default {
     Vue.prototype.$bus = new Vue()
     Vue.prototype.$bus.on = Vue.prototype.$bus.$on
     Vue.prototype.$bus.emit = Vue.prototype.$bus.$emit
-    Vue.prototype.E_SETTINGS = 'E_SETTINGS'
+    Vue.prototype.$bus.E_SETTINGS = 'E_SETTINGS'
   }
 }
