@@ -17,6 +17,10 @@ export default {
 
   mounted () {
     console.log('peroformance mounted')
+  },
+
+  activated () {
+    console.log('peroformance activated')
     this.$bus.on(this.$bus.E_SETTINGS, function (settings) {
       console.log(settings)
     })

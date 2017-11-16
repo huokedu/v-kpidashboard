@@ -2,7 +2,9 @@
   <div id="app">
     <img src="./assets/logo.png">
     <div>{{content}}</div>
-    <router-view/>
+    <keep-alive>
+      <router-view/>
+    </keep-alive>
   </div>
 </template>
 

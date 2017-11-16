@@ -17,6 +17,10 @@ export default {
 
   mounted () {
     console.log('qcview mounted')
+  },
+
+  activated () {
+    console.log('qcview activated')
     this.$bus.on(this.$bus.E_SETTINGS, function (settings) {
       console.log(settings)
     })
