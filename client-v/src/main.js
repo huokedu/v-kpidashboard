@@ -5,7 +5,9 @@ import App from './App'
 import router from './router'
 import store from './store'
 import Bus from '@/plugins/Bus'
+import axios from 'axios'
 
+Vue.prototype.$http = axios
 Vue.use(Bus)
 Vue.config.productionTip = false
 
