@@ -8,34 +8,34 @@
 
 export default {
   name: 'footer-bar',
-  data () {
+  data() {
     return {
       title: 'Footer bar'
     }
   },
 
-  mounted () {
+  mounted() {
     console.log('Footer bar mounted')
   },
 
-  activated () {
+  activated() {
     console.log('Footer bar activated')
     this.$bus.on(this.$bus.E_SETTINGS, function (settings) {
-      console.log(settings)
+      console.log(settings);
     })
   }
 }
 </script>
 
 <style lang='scss' scoped>
-  $font-size: 40px;
-  .title {
-    font-size: $font-size;
-    font-weight: bold;
-  }
-  
-  $bottombarHeight: 56px;
-  .footer-bar{
-    height: $bottombarHeight;
-  }
+$font-size: 40px;
+.title {
+  font-size: $font-size;
+  font-weight: bold;
+}
+
+$bottombarHeight: 56px;
+.footer-bar {
+  height: $bottombarHeight;
+}
 </style>
