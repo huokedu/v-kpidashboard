@@ -12,7 +12,7 @@
 
 export default {
   name: 'header-bar',
-  data () {
+  data() {
     return {
       topTitle: 'Drilling Performance',
       subTitle: ''
@@ -30,7 +30,7 @@ export default {
     }
   },
 
-  mounted () {
+  mounted() {
     this.$bus.on(this.$bus.E_SETTINGS, (settings) => {
       this.$http
         .get(settings['wellURI'] + '/' + settings.wellID, { headers: { Authorization: 'Bearer ' + settings.serviceToken } })

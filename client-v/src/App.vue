@@ -19,7 +19,7 @@ import SideBar from '@/components/SideBar'
 import FooterBar from '@/components/FooterBar'
 export default {
   name: 'app',
-  data () {
+  data() {
     return {
       content: 'app root'
     }
@@ -31,7 +31,7 @@ export default {
     FooterBar
   },
 
-  mounted () {
+  mounted() {
     console.log('app mounted')
     this.$store.dispatch('getSettings', { $route: this.$route, $bus: this.$bus })
   }
@@ -39,32 +39,32 @@ export default {
 </script>
 
 <style lang="scss">
-  $topbarHeight: 56px;
-  $bottombarHeight: 56px;
-  $sidebarWidth: 56px;
-  #app {
-    font-family: "Avenir", Helvetica, Arial, sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    margin: 0;
-    padding: 0;
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    display: flex;
-    background: #ebeaec;
-  }
+$topbarHeight: 56px;
+$bottombarHeight: 56px;
+$sidebarWidth: 56px;
+#app {
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  background: #ebeaec;
+}
 
-  .main-content{
-    height: 100%;
-    width: calc(100% - #{$sidebarWidth} );
-  }
+.main-content {
+  height: 100%;
+  width: calc(100% - #{$sidebarWidth});
+}
 
-  .view-content{
-    height: calc(100% - #{$topbarHeight} - #{$bottombarHeight});
-    overflow-y: auto;
-    background: white;
-  }
+.view-content {
+  height: calc(100% - #{$topbarHeight} - #{$bottombarHeight});
+  overflow-y: auto;
+  background: white;
+}
 </style>

@@ -9,17 +9,17 @@
 
 export default {
   name: 'performance-view',
-  data () {
+  data() {
     return {
       title: 'Performance View'
     }
   },
 
-  mounted () {
+  mounted() {
     console.log('peroformance mounted')
   },
 
-  activated () {
+  activated() {
     console.log('peroformance activated')
     this.$bus.on(this.$bus.E_SETTINGS, function (settings) {
       console.log(settings)

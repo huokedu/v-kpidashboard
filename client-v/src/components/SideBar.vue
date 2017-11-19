@@ -8,17 +8,17 @@
 
 export default {
   name: 'side-bar',
-  data () {
+  data() {
     return {
       title: 'Side bar'
     }
   },
 
-  mounted () {
+  mounted() {
     console.log('Side bar mounted')
   },
 
-  activated () {
+  activated() {
     console.log('Side bar activated')
     this.$bus.on(this.$bus.E_SETTINGS, function (settings) {
       console.log(settings)
@@ -28,15 +28,15 @@ export default {
 </script>
 
 <style lang='scss' scoped>
-  .title {
-    font-weight: bold;
-  }
+.title {
+  font-weight: bold;
+}
 
-  $sidebarWidth: 56px;
-  .side-bar{
-    width: $sidebarWidth;
-    height: 100%;
-    background: #242424;
-    color: hsla(0,0%,100%,.87);
-  }
+$sidebarWidth: 56px;
+.side-bar {
+  width: $sidebarWidth;
+  height: 100%;
+  background: #242424;
+  color: hsla(0, 0%, 100%, 0.87);
+}
 </style>
