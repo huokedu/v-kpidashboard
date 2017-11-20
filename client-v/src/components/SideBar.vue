@@ -28,11 +28,11 @@ export default {
 </script>
 
 <style lang='scss' scoped>
+@import '../assets/main.scss';
 .title {
   font-weight: bold;
 }
 
-$sidebarWidth: 56px;
 .side-bar {
   width: $sidebarWidth;
   height: 100%;

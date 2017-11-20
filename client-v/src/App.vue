@@ -39,9 +39,7 @@ export default {
 </script>
 
 <style lang="scss">
-$topbarHeight: 56px;
-$bottombarHeight: 56px;
-$sidebarWidth: 56px;
+@import './assets/main.scss';
 #app {
   font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;

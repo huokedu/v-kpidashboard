@@ -47,8 +47,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-$topbarHeight: 56px;
-
+@import '../assets/main.scss';
 .header-bar {
   height: $topbarHeight;
   display: flex;

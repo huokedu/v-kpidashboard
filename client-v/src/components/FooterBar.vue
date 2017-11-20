@@ -28,13 +28,13 @@ export default {
 </script>
 
 <style lang='scss' scoped>
+@import '../assets/main.scss';
 $font-size: 40px;
 .title {
   font-size: $font-size;
   font-weight: bold;
 }
 
-$bottombarHeight: 56px;
 .footer-bar {
   height: $bottombarHeight;
 }
