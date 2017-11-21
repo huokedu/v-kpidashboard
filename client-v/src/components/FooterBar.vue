@@ -111,7 +111,6 @@ export default {
   font-size: 14px;
 }
 
-
 .footer-bar-item:nth-child(3) {
   margin-right: 40px;
 }
