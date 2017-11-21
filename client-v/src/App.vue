@@ -64,6 +64,6 @@ export default {
 .view-content {
   height: calc(100% - #{$topbarHeight} - #{$bottombarHeight});
   overflow-y: auto;
-  background: white;
+  padding: 0;
 }
 </style>
