@@ -28,20 +28,29 @@ export default {
   name: 'performance-view',
   data() {
     return {
-      title: 'Performance View'
+      title: 'Performance View',
+      config: ''
     }
   },
 
   mounted() {
-    console.log('peroformance mounted')
+    this.$bus.on(this.$bus.E_SETTINGS, (settings) => {
+      this.config = settings;
+    });
   },
 
   activated() {
-    console.log('peroformance activated')
-    this.$bus.on(this.$bus.E_SETTINGS, function (settings) {
-      console.log(settings)
-    })
+    if (!this.config) {
+      return;
+    }
+    this.update();
+  },
+
+  methods: {
+    update() {
+    }
   }
+
 }
 </script>
 
