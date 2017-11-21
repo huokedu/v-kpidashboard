@@ -29,7 +29,7 @@ export default {
 
 <style lang='scss' scoped>
 @import '../global.scss';
-$font-size: 40px;
+$font-size: 30px;
 .title {
   font-size: $font-size;
   font-weight: bold;
