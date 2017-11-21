@@ -28,7 +28,7 @@ export default {
 </script>
 
 <style lang='scss' scoped>
-@import '../assets/main.scss';
+@import '../global.scss';
 $font-size: 40px;
 .title {
   font-size: $font-size;
