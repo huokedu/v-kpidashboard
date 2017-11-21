@@ -3,8 +3,10 @@ const path = require('path')
 const utils = require('./utils')
 const config = require('../config')
 const vueLoaderConfig = require('./vue-loader.conf')
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+const publish_js_dir = path.join(__dirname, '../../server/public/static/js');
 
-function resolve (dir) {
+function resolve(dir) {
   return path.join(__dirname, '..', dir)
 }
 
@@ -72,5 +74,10 @@ module.exports = {
         }
       }
     ]
-  }
+  },
+  plugins: [
+    new CopyWebpackPlugin([
+      { context: path.join(resolve('node_modules'), '@slbint', 'geotoolkit', 'bin'), from: '*.js', to: publish_js_dir }
+    ])
+  ]
 }

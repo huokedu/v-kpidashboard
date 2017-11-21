@@ -7,6 +7,9 @@ import store from './store'
 import Bus from '@/plugins/Bus'
 import axios from 'axios'
 
+import 'bootstrap/dist/css/bootstrap.css'
+import 'font-awesome/css/font-awesome.css'
+
 Vue.prototype.$http = axios
 Vue.use(Bus)
 Vue.config.productionTip = false

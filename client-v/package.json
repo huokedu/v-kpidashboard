@@ -15,7 +15,10 @@
     "lint": "eslint --ext .js,.vue src test/unit/specs test/e2e/specs"
   },
   "dependencies": {
+    "@slbint/geotoolkit": "2.4.30",
     "axios": "^0.17.0",
+    "bootstrap": "^3.3.7",
+    "font-awesome": "^4.7.0",
     "sass-loader": "^6.0.6",
     "vue": "^2.5.2",
     "vue-router": "^3.0.1",
