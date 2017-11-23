@@ -3,10 +3,10 @@
         <div class="performance-view-col left-col">
           <div class="left-col-top">
             <div class="left-col-top-left">
-              <footage name="DAILY FOOTAGE"></footage>
+              <footage name="DAILY FOOTAGE" kind="daily"></footage>
             </div>
             <div class="left-col-top-right">
-              <footage name="ON-BOTTOM ROP"></footage>
+              <footage name="ON-BOTTOM ROP" kind="rop"></footage>
             </div>
           </div>
           <div class="left-col-bottom">
@@ -24,6 +24,7 @@
 
 <script>
 import Footage from '@/components/Footage'
+import { PREVIOUS_DAYS } from '@/util'
 
 export default {
   name: 'performance-view',
@@ -52,11 +53,40 @@ export default {
   },
 
   methods: {
+    getTimeList(currentTime) {
+      let timeList = [];
+      for (let i = 0; i < PREVIOUS_DAYS + 1; i++) {
+        let daytime = new Date(currentTime);
+        daytime.setDate(daytime.getDate() - i);
+        timeList.push(daytime.toISOString());
+      }
+      return timeList;
+    },
+
     update() {
       return 0;
     }
-  }
+  },
 
+  computed: {
+    'ready': function () {
+      if (this.$store.getters.wellInfo && this.$store.getters.rigInfo && this.$store.getters.rigInfo.holeDepthTime) {
+        return { ...this.$store.getters.wellInfo, ...this.$store.getters.rigInfo }
+      }
+    }
+  },
+
+  watch: {
+    'ready': function (val) {
+      let postData = {
+        'wellId': this.$store.getters.settings.wellID,
+        'wellboreId': this.$store.getters.settings.wellboreID,
+        'ropType': 'OnBottom',
+        'dates': this.getTimeList(this.$store.getters.rigInfo.holeDepthTime)
+      }
+      this.$store.dispatch('getFootage', postData)
+    }
+  }
 }
 </script>
 

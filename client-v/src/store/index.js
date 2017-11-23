@@ -7,20 +7,21 @@ Vue.use(Vuex)
 
 const state = {
   appSettings: {},
-  footageData: {},
+  footageData: [],
   rigInfoData: {
     rigState: '--',
     bitDepth: '--',
     holeDepth: '--',
     bitDepthUnit: 'ft',
-    holeDepthUnit: 'ft'
+    holeDepthUnit: 'ft',
+    holeDepthTime: ''
   },
   wellInfoData: {}
 }
 
 const getters = {
   settings: state => Object.keys(state.appSettings).length ? { ...state.appSettings } : '',
-  footage: state => Object.keys(state.footageData).length ? { ...state.footageData } : '',
+  footage: state => state.footageData.length ? [...state.footageData] : [],
   rigInfo: state => Object.keys(state.rigInfoData).length ? { ...state.rigInfoData } : '',
   wellInfo: state => Object.keys(state.wellInfoData).length ? { ...state.wellInfoData } : ''
 }
@@ -32,7 +33,7 @@ const mutations = {
   },
 
   updateFootage: (state, footageData) => {
-    state.footageData = { ...footageData };
+    state.footageData = [...footageData];
     return state.footageData;
   },
 
@@ -65,15 +66,10 @@ const actions = {
   },
 
   getFootage(context, payload) {
-    let url = context.getters.settings['Uri-Slb.Prism.Rhapsody.Service.FootageProjection-1'];
-    if (!url) {
-      console.log('invalid footage service url');
-      return;
-    }
+    let url = context.getters.settings['Uri-Slb.Prism.Rhapsody.Service.FootageProjection-1'] + '/dailyperf';
     axios.post(url, payload)
       .then(res => {
         if (res && res.data) {
-          console.log(res.data);
           context.commit('updateFootage', res.data);
         }
       })
@@ -82,10 +78,6 @@ const actions = {
 
   getRigInfo(context, payload) {
     let url = context.getters.settings['Uri-Slb.Prism.RO.Service.DrillingApi.TimeData-1'] + '/2015/TimeData/GetLastValue';
-    if (!url) {
-      console.log('invalid time data service url');
-      return;
-    }
     axios
       .post(url, payload)
       .then((res) => {
@@ -111,10 +103,6 @@ const actions = {
 
   getWellInfo(context, payload) {
     let url = context.getters.settings['Uri-Slb.Prism.Core.Service.Well-1'] + '/' + context.getters.settings.wellID;
-    if (!url) {
-      console.log('invalid well service url');
-      return;
-    }
     axios
       .get(url)
       .then((res) => {

@@ -2,7 +2,7 @@ const express = require(__dirname + '/../../server/node_modules/express');
 const router = express.Router();
 const path = require('path');
 const mockdb = require('./data');
-mockdb.appSettings.debugWellID = process.env.RHAPSODY_DEBUG_TEST_WELLID || '';
+mockdb.appSettings.wellID = process.env.RHAPSODY_DEBUG_TEST_WELLID || '';
 
 const reqGetUrlMap = {
     '/api/user': mockdb.user,

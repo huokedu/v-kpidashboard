@@ -43,7 +43,7 @@
 <script>
 
 export default {
-    props: ['name'],
+    props: ['name', 'kind'],
 
     data() {
         return {
@@ -182,6 +182,15 @@ export default {
             opt.series[1].symbolSize = [barW, 3];
             opt.series[3].barGap = -1;
             return opt;
+        },
+
+        extract(footageData) {
+            console.log('extract')
+        },
+
+        updateChart(fdata) {
+            console.log('updatechart')
+            return 0
         }
     },
 
@@ -194,14 +203,21 @@ export default {
 
     activated() {
         console.log('footage component avtivated');
+    },
+
+    watch: {
+        '$store.getters.footage': function (footageData) {
+            console.log(footageData);
+        }
     }
+
 }
 </script>
 
 <style lang="scss" scoped>
 $normalFontSize: 14px;
-$onTrackColor:#8cc151;
-$alertColor:#d34c4b;
+$onTrackColor: #8cc151;
+$alertColor: #d34c4b;
 
 .footage {
   display: flex;

@@ -24,3 +24,5 @@ export const RIGSTATE = [
     'Absent',
     'Data Gap'
 ];
+
+export const PREVIOUS_DAYS = 5;
