@@ -2,36 +2,35 @@
  * description: server side framework(node+express)
  */
 
-var express = require('express');
-var path = require('path');
-var favicon = require('serve-favicon');
-var logger = require('morgan');
-var bodyParser = require('body-parser');
-var passport = require('passport');
-var cookieParser = require('cookie-parser');
-var sts = require('strict-transport-security');
-var sauthPassport = require('./auth/sauth.passport');
-var appsettings = require('./appsettings.json');
+const express = require('express');
+const path = require('path');
+const favicon = require('serve-favicon');
+const logger = require('morgan');
+const bodyParser = require('body-parser');
+const passport = require('passport');
+const cookieParser = require('cookie-parser');
+const sts = require('strict-transport-security');
+const sauthPassport = require('./auth/sauth.passport');
+const appsettings = require('./appsettings.json');
+
 appsettings.ConsulUri = process.env.ConsulUri || appsettings.ConsulUri;
 appsettings.Environment = process.env.Environment || appsettings.Environment;
-var consul = require('./util/consul')(appsettings);
-
-var publicPath = path.join(__dirname, 'public');
-var server = express();
-var env = process.env.NODE_ENV || 'development';
-server.locals.ENV = env;
+const consul = require('./util/consul')(appsettings);
+const publicPath = path.join(__dirname, 'public');
+const server = express();
+const env = process.env.NODE_ENV || 'development';
 server.DEBUG_MODE = (env == 'development');
 
 //server.use(require('compression')()) // must be first!
-
 server.disable('x-powered-by');
 server.disable('server');
 server.use(favicon(publicPath + '/favicon.ico'));
 server.use(logger('dev'));
 if (server.DEBUG_MODE) {
-    server.use(require('express-session')({ secret: 'slb dls', resave: false, saveUninitialized: false }));
+    server.use(require('cookie-session')({ maxAge: 60 * 60 * 1000, secret: 'slb dls' }));
 } else {
-    server.use(require('express-session')({ secret: 'slb dls', resave: false, saveUninitialized: false, proxy: true, cookie: { secure: true } }));
+    server.set('trust proxy', 1) // trust first proxy
+    server.use(require('cookie-session')({ maxAge: 60 * 60 * 1000, secret: 'slb dls', secure: true }));
 }
 server.use(sts.getSTS({ 'max-age': { days: 30 } }));
 server.use(cookieParser());
@@ -43,7 +42,7 @@ var startup = (configuration) => {
     sauthPassport(server, passport, configuration);
 
     // pass config to api route
-    server.use('/api/*', (req, res, next) => { req.appconfig = configuration; next(); });
+    server.use('/api/*', (req, res, next) => { req.appconfig = configuration; next();});
 
     // add routers
     server.use(require('./routes/api'));

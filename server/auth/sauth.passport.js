@@ -45,7 +45,7 @@ module.exports = function (server, passport, config) {
                 refreshToken: refreshToken,
                 givenName: userInfo.firstname || '',
                 lastName: userInfo.lastname || '',
-                date: Date.now()
+                expDate: userInfo.exp
             };
             done(null, user);
         } catch (error) {
@@ -55,6 +55,6 @@ module.exports = function (server, passport, config) {
 
     server.get('/signon', passport.authenticate('sauth'));
 
-    server.post('/signonCallback', passport.authenticate('sauth', { successRedirect: '/', failureRedirect: '/signon', }));
+    server.post('/signonCallback', passport.authenticate('sauth', { successRedirect: '/', failureRedirect: '/signon?' + Date.now(), }));
 
 };

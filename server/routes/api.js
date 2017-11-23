@@ -1,67 +1,62 @@
-var express = require('express');
-var ensure = require('connect-ensure-login');
-var path = require('path');
-var svctoken = require('../auth/sauth.svctoken');
-var stsbearer = require('../util/sts.bearer');
-var data = require('../data');
-var apiRouter = express.Router();
-var serviceTokenCache = {};
-var expiredseconds = 23 * 3600;
+const express = require('express');
+const ensure = require('connect-ensure-login');
+const path = require('path');
+const svctoken = require('../auth/sauth.svctoken');
+const stsbearer = require('../util/sts.bearer');
+const data = require('../data');
+const apiRouter = express.Router();
+const NodeCache = require("node-cache");
+const serviceTokenCache = new NodeCache({ checkperiod: 120 });
+const expiredseconds = 23 * 3600; //23h
 
-apiRouter.all('/api/*', ensure.ensureLoggedIn('/signon'));
+apiRouter.all('/api/*', ensure.ensureLoggedIn('/signon?' + Date.now()));
 
-apiRouter.get('/api/user', function (req, res) {
+apiRouter.all('/api/*', (req, res, next) => {
+    res.set('Cache-Control', 'no-cache, no-store');
+    next();
+});
+
+apiRouter.get('/api/user', (req, res) => {
     res.json({
-        'nameIdentifier': '',
         'name': req.user.givenName + ' ' + req.user.lastName,
-        'roles': '',
         'upn': req.user.id,
         'utoken': req.user.utoken,
     });
 });
 
-apiRouter.get('/api/appSettings', function (req, res) {
-    var config = req.appconfig;
-    var delt = (Date.now() - req.user.date) / 1000;
-    var reqlist = [stsbearer.fetch(config['STS-Endpoint'], req.user.id)]
-    if (!(serviceTokenCache[req.user.id]) || delt >= expiredseconds) {
-        var sToken = svctoken(config['SAuth-ServiceToken-Uri'], config['SAuth-ServiceToken-ApiKey']);
-        reqlist.push(sToken.fetch({ uJwttoken: req.user.utoken, targetProjectId: '', targetServiceId: '' }))
-    }
+apiRouter.get('/api/appSettings', (req, res) => {
+    let config = req.appconfig;
+    let appSettings = {
+        debugWellID: process.env.RHAPSODY_DEBUG_TEST_WELLID || '',
+        serviceToken: ''
+    };
+    Object.keys(config).filter(key => /^Uri-.*/.test(key)).forEach(key => appSettings[key] = config[key]);
 
-    Promise.all(reqlist)
-        .then(arrRes => {
-            serviceTokenCache[req.user.id] = arrRes[1] ? arrRes[1].svctoken : serviceTokenCache[req.user.id];
-            res.json({
-                'baseUrl': null,
-                'debugWellID': process.env.RHAPSODY_DEBUG_TEST_WELLID || '',
-                'alertApiURI': config['Uri-Slb.Prism.Core.Service.Alert-1'],
-                'alertRhapsodyApiURI': config['Uri-Slb.Prism.Rhapsody.Service.Alert-1'],
-                'alertPublisherURI': config['Uri-Slb.Prism.Core.Service.AlertPublisher-1'],
-                'drillingActivityReaderURI': config['Uri-Slb.Prism.Rhapsody.Service.DrillingActivityReader-1'],
-                'drillingActivityReaderURI': config['Uri-Slb.Prism.Rhapsody.Service.DrillingActivityReader-1'],
-                'drillingApiDepthDataURI': config['Uri-Slb.Prism.RO.Service.DrillingApi.DepthData-1'],
-                'drillingApiTimeDataURI': config['Uri-Slb.Prism.RO.Service.DrillingApi.TimeData-1'],
-                'drillingStreamTimeDataURI': config['Uri-Slb.Prism.RO.Service.DrillingStream.TimeData-1'],
-                'fedSts': config['STS-Endpoint'],
-                'footageProjectionURI': config['Uri-Slb.Prism.Rhapsody.Service.FootageProjection-1'],
-                'jwtToken': arrRes[0].access_token,
-                'kpiDataURI': config['Uri-Slb.Prism.Rhapsody.Service.KpiPublisher-1'],
-                'kpiReaderURI': config['Uri-Slb.Prism.Rhapsody.Service.KpiReader-2'],
-                'rhapsodyApiURI': config['Uri-Slb.Prism.Rhapsody.Service.RhapsodyApi-1'],
-                'rhapsodycommandURI': config['Uri-Slb.Prism.Rhapsody.Service.Command-1'],
-                'roDashboardURI': config['Uri-Slb.Prism.RO.View.Dashboard'],
-                'zeusDashboardURI': config['Uri-Slb.Prism.Zeus.View.WebComponents'],
-                'rhapsodyDashboardURI': config['Uri-Slb.Prism.Rhapsody.View.Dashboard'],
-                'serviceToken': serviceTokenCache[req.user.id],
-                'targetsURI': config['Uri-Slb.Prism.Rhapsody.Service.Targets-2'],
-                'wellURI': config['Uri-Slb.Prism.Core.Service.Well-1']
+    let deltTime = parseInt(req.user.expDate) * 1000 - Date.now() - 3600000;
+    let serviceToken = serviceTokenCache.get(req.user.id);
+    console.log('stoken cache', serviceToken);
+    console.log('utoken expired date', req.user.expDate);
+    console.log('deltTime', deltTime);
+
+    if (serviceToken && deltTime > 0) {
+        appSettings.serviceToken = serviceToken;
+        res.json(appSettings);
+    }
+    else {
+        svctoken(config['SAuth-ServiceToken-Uri'], config['SAuth-ServiceToken-ApiKey'])
+            .fetch({ uJwttoken: req.user.utoken, targetProjectId: '', targetServiceId: '' })
+            .then(tRes => {
+                appSettings.serviceToken = tRes.svctoken;
+                serviceTokenCache.set(req.user.id, tRes.svctoken, expiredseconds);
+                res.json(appSettings);
+            })
+            .catch(e => {
+                console.log(e);
             });
-        })
-        .catch(e => console.log(e));
+    }
 });
 
-apiRouter.get('/api/hcm/timeplot', function (req, res) {
+apiRouter.get('/api/hcm/timeplot', (req, res) => {
     res.json(data.timeplot);
 });
 module.exports = apiRouter;

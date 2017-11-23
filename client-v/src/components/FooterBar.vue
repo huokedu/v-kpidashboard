@@ -16,6 +16,7 @@
 </template>
 
 <script>
+import { DISPLAY_STATE_CHANNELS, RIGSTATE } from '@/util'
 
 export default {
   name: 'footer-bar',
@@ -31,68 +32,43 @@ export default {
     }
   },
 
-  mounted() {
-    const rigState = [
-      'Rotary Drill',
-      'Slide Drill',
-      'In Slips',
-      'Ream',
-      'Run In, Pump',
-      'Run In, Rotate',
-      'Run In',
-      'Back Ream',
-      'Pull Up, Pump',
-      'Pull Up, Rotate',
-      'Pull Up',
-      'Rotate, Pump',
-      'Pump',
-      'Rotate',
-      'Stationary',
-      'Unknown',
-      'Absent',
-      'Data Gap'
-    ];
+  methods: {
+    update(resp) {
+      let rigInfo = { ...this.rigInfo };
+      for (let c of resp['lastValues']) {
+        if (c['mnemonic'] === 'DrillBoreHole.TD' && c['value']['value']) {
+          rigInfo.holeDepth = c['value']['value'].toFixed(2);
+          rigInfo.holeDepthTime = c['value']['time'];
+        }
+        if (c['mnemonic'] === 'DepthMonitoring.RBD' && c['value']['value']) {
+          rigInfo.bitDepth = c['value']['value'].toFixed(2);
+        }
+        if (c['mnemonic'] === 'DepthMonitoring.ACTIVITY') {
+          rigInfo.rigState = RIGSTATE[c['value']['value']] || '--';
+        }
+        this.rigInfo = rigInfo;
+      }
+    }
+  },
 
+  mounted() {
     this.$bus.on(this.$bus.E_SETTINGS, (settings) => {
-      let rigInfoUrl = settings.drillingApiTimeDataURI + '/2015/TimeData/GetLastValue';
+      let rigInfoUrl = settings['Uri-Slb.Prism.RO.Service.DrillingApi.TimeData-1'] + '/2015/TimeData/GetLastValue';
       let postData = {
-        mnemonics: ['DrillBoreHole.TD', 'DepthMonitoring.RBD', 'DepthMonitoring.ACTIVITY'],
-        units: ['ft', 'ft', 'Euc']
+        mnemonics: DISPLAY_STATE_CHANNELS.map(channel => channel.name),
+        units: DISPLAY_STATE_CHANNELS.map(channel => channel.unit)
       };
       this.$http
         .post(rigInfoUrl, postData, { headers: { Authorization: 'Bearer ' + settings.serviceToken, 'slb-wellId': settings.wellID } })
         .then((wellinfo) => {
           if (wellinfo && wellinfo.data) {
-            let resp = wellinfo.data;
-            let rigInfo = {
-              holeDepth: '--',
-              holeDepthTime: '',
-              holeDepthUnit: 'ft',
-              bitDepth: '--',
-              bitDepthUnit: 'ft',
-              rigState: '--'
-            };
-            for (let c of resp['lastValues']) {
-              if (c['mnemonic'] === 'DrillBoreHole.TD' && c['value']['value']) {
-                rigInfo.holeDepth = c['value']['value'].toFixed(2);
-                rigInfo.holeDepthTime = c['value']['time'];
-              }
-              if (c['mnemonic'] === 'DepthMonitoring.RBD' && c['value']['value']) {
-                rigInfo.bitDepth = c['value']['value'].toFixed(2);
-              }
-              if (c['mnemonic'] === 'DepthMonitoring.ACTIVITY') {
-                let rig = c['value']['value'];
-                if (rig !== undefined && rig !== null) {
-                  rigInfo.rigState = rigState[rig] || '--';
-                }
-              }
-            }
-            this.rigInfo = rigInfo;
+            this.update(wellinfo.data);
           }
         })
         .catch(err => console.log(err));
     })
   }
+
 }
 </script>
 

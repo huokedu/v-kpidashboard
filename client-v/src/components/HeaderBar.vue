@@ -70,7 +70,7 @@ export default {
   methods: {
     updateSubTitle(settings) {
       this.$http
-        .get(settings['wellURI'] + '/' + settings.wellID, { headers: { Authorization: 'Bearer ' + settings.serviceToken } })
+        .get(settings['Uri-Slb.Prism.Core.Service.Well-1'] + '/' + settings.wellID, { headers: { Authorization: 'Bearer ' + settings.serviceToken } })
         .then((wellinfo) => {
           if (wellinfo && wellinfo.data && wellinfo.data.data) {
             let wellname = wellinfo.data.data.match(/<eml:Title>(.+?)<\/eml:Title>/)

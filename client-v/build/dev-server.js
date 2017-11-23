@@ -8,7 +8,7 @@ if (!process.env.NODE_ENV) {
 
 const mock = process.argv.indexOf('--mock') >= 0;
 const express = require(__dirname + '/../../server/node_modules/express');
-const esession = require(__dirname + '/../../server/node_modules/express-session');
+const esession = require(__dirname + '/../../server/node_modules/cookie-session');
 const logger = require(__dirname + '/../../server/node_modules/morgan');
 const bodyParser = require(__dirname + '/../../server/node_modules/body-parser');
 const passport = require(__dirname + '/../../server/node_modules/passport');
@@ -40,7 +40,7 @@ const hotMiddleware = require('webpack-hot-middleware')(compiler, { log: console
 const page = require(__dirname + '/../../server/routes/page');
 
 app.use(logger('dev', { skip: function (req, res) { return res.statusCode < 400; } }));
-app.use(esession({ secret: 'slb dls', resave: false, saveUninitialized: false }));
+app.use(esession({ maxAge: 60 * 60 * 1000, secret: 'slb dls' }));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 var configuration = appsettings['Consul'];
@@ -51,7 +51,7 @@ if (!mock) {
   sauthPassport(app, passport, configuration);
   app.use('/api/*', (req, res, next) => { req.appconfig = configuration; next(); });
   app.use(require(__dirname + '/../../server/routes/api'));
-  checkAuth = ensure.ensureLoggedIn({ redirectTo: '/signon', setReturnTo: true });
+  checkAuth = ensure.ensureLoggedIn({ redirectTo: '/signon?' + Date.now(), setReturnTo: true });
 } else {
   app.use(mockroutes);
 }
@@ -61,10 +61,10 @@ app.use(hotMiddleware)
 
 // rewrite page route to locate it in memory files
 page.pageRoutes.forEach(function (route) {
-  app.get(route, checkAuth, (req, res, next) => { req.url = '/index.html'; next(); });
+  app.get(route, checkAuth, (req, res, next) => {  res.set('Cache-Control', 'no-cache, no-store'); req.url = '/index.html'; next(); });
 });
 
-app.get('/credits', checkAuth, (req, res, next) => { req.url = '/credits.html'; next(); });
+app.get('/credits', checkAuth, (req, res, next) => {  res.set('Cache-Control', 'no-cache, no-store'); req.url = '/credits.html'; next(); });
 
 // serve webpack bundle output
 app.use(devMiddleware)
