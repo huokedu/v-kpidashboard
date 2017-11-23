@@ -196,23 +196,23 @@ export default {
                             color: 'rgba(255,0,0,0)'
                         }
                     },
-                    position: function (point, params, dom, rect, size) {
-                        if (params[0].dataIndex === 0) {
-                            return ['14%', '40%'];
-                        }
-                        if (params[0].dataIndex === 1) {
-                            return ['32%', '40%'];
-                        }
-                        if (params[0].dataIndex === 2) {
-                            return ['50%', '40%'];
-                        }
-                        if (params[0].dataIndex === 3) {
-                            return ['70%', '40%'];
-                        }
-                        if (params[0].dataIndex === 4) {
-                            return ['88%', '40%'];
-                        }
-                    },
+                    // position: function (point, params, dom, rect, size) {
+                    //     if (params[0].dataIndex === 0) {
+                    //         return ['14%', '40%'];
+                    //     }
+                    //     if (params[0].dataIndex === 1) {
+                    //         return ['32%', '40%'];
+                    //     }
+                    //     if (params[0].dataIndex === 2) {
+                    //         return ['50%', '40%'];
+                    //     }
+                    //     if (params[0].dataIndex === 3) {
+                    //         return ['70%', '40%'];
+                    //     }
+                    //     if (params[0].dataIndex === 4) {
+                    //         return ['88%', '40%'];
+                    //     }
+                    // },
                     backgroundColor: 'black'
                 }
             };
@@ -270,10 +270,10 @@ export default {
             var span1;
             var span2;
             if (footageValue !== '--') {
-                span1 = $('<span style="text-align:left">').text('FOOTAGE (ft)');
+                span1 = $('<span style="text-align:left;margin-right:20px">').text('FOOTAGE (ft)');
             }
             if (ropValue !== '--') {
-                span1 = $('<span style="text-align:left">').text('ROP (ft/hr)');
+                span1 = $('<span style="text-align:left;margin-right:20px">').text('ROP (ft/hr)');
             }
             if (footageValue !== '--') {
                 span2 = $('<span style="float:right">').text('TARGET (ft/day)');
