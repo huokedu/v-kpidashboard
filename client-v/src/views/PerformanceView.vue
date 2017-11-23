@@ -3,10 +3,10 @@
         <div class="performance-view-col left-col">
           <div class="left-col-top">
             <div class="left-col-top-left">
-              <footage name="DAILY FOOTAGE" kind="daily"></footage>
+              <footage name="DAILY FOOTAGE" kind="footage"></footage>
             </div>
             <div class="left-col-top-right">
-              <footage name="ON-BOTTOM ROP" kind="rop"></footage>
+              <footage name="ON-BOTTOM ROP" kind="ROP"></footage>
             </div>
           </div>
           <div class="left-col-bottom">

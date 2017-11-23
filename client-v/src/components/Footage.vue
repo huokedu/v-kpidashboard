@@ -23,8 +23,8 @@
             </div>
             <div class="info-row">
                 <div class="current">
-                    <div class="current-title">CURRENT(ft)</div>
-                    <div class="current-value">--</div>
+                    <div class="current-title">CURRENT ({{currentFootage.unit}})</div>
+                    <div class="current-value">{{currentFootage.value}}</div>
                 </div>
                 <div class="projected">
                     <div class="projected-title">PROJECTED/TARGET(ft/day)</div>
@@ -48,7 +48,49 @@ export default {
     data() {
         return {
             isAlert: false,
-            chartDom: ''
+            chartDom: '',
+            chartData: '',
+            chartOption: ''
+        }
+    },
+
+    computed: {
+        currentFootage: function () {
+            let footageData = this.$store.getters.footage.slice();
+            if (!footageData || !footageData.length) {
+                return {
+                    value: '--',
+                    unit: '--'
+                };
+            }
+            footageData.sort((a, b) => new Date(a.startTime) - new Date(b.startTime));
+            let cf = footageData[footageData.length - 1] || {};
+            let previousFootageData = footageData.slice();
+            previousFootageData.length = footageData.length - 1;
+            let chartData = {};
+            let rigTimeZone = this.$store.getters.wellInfo.rigTimezone;
+            chartData.dayAxis = previousFootageData.map(it => new Date(it.startTime))
+                .map(date => new Date(date.valueOf() + rigTimeZone * 3600 * 1000).toISOString())
+                .map(d => {
+                    const MONTH_STR = ['Jan.', 'Feb.', 'Mar.', 'Apr.', 'May.', 'Jun.', 'Jul.', 'Aug.', 'Sep.', 'Oct.', 'Nov.', 'Dec.'];
+                    let m = new Date(d);
+                    return (d.split('-')[2].split('T'))[0] + ' ' + MONTH_STR[m.getUTCMonth()];
+                });
+            if (this.kind === 'ROP') {
+                chartData.perDayData = previousFootageData.map(it => this.convertValue(it.rop));
+                this.chartData = chartData;
+                return {
+                    value: this.convertValue(cf.rop) || '--',
+                    unit: 'ft/h' || cf.ropUnit || '--'
+                }
+            } else {
+                chartData.perDayData = previousFootageData.map(it => this.convertValue(it.drilledFootage));
+                this.chartData = chartData;
+                return {
+                    value: this.convertValue(cf.drilledFootage) || '--',
+                    unit: 'ft' || cf.footageUnit || '--'
+                };
+            }
         }
     },
 
@@ -171,7 +213,7 @@ export default {
                             return ['88%', '40%'];
                         }
                     },
-                    backgroundColor: 'transparent'
+                    backgroundColor: 'black'
                 }
             };
         },
@@ -184,20 +226,85 @@ export default {
             return opt;
         },
 
-        extract(footageData) {
-            console.log('extract')
+        convertValue(value) {
+            const FACTOR = 3.28083989501312;
+            if (value === '--') {
+                return '--';
+            }
+            if (value > 0) {
+                return (Math.floor(FACTOR * value * 10) / 10).toString();
+            } else {
+                return '0';
+            }
         },
 
-        updateChart(fdata) {
-            console.log('updatechart')
-            return 0
+        updateChart() {
+            var opt = this.chartOption;
+            opt.series[0].name = this.kind;
+            opt.series[0].data = this.chartData.perDayData;
+            opt.xAxis.data = this.chartData.dayAxis;
+            this.chartDom.setOption(opt);
+        },
+
+        tipFormatter(params) {
+            var $ = window.$;
+            var footageValue = '--';
+            var targetValue = '--';
+            var ropValue = '--';
+            params.forEach((param) => {
+                let v = param.value;
+                let n = param.seriesName;
+                if (n === 'ROP') {
+                    ropValue = v;
+                }
+                if (n === 'footage') {
+                    footageValue = v;
+                }
+                if (n === 'TargetBar') {
+                    targetValue = v;
+                }
+            });
+            var divWarp = $('<div style="position: relative;display: inline-block;">');
+            var divContent = $('<div class="tooltiptext"></div>');
+            var divTitle = $('<div style="font-size:14px;color:#E7e7e7;padding:10px 14px 0 14px;font-family: Roboto">');
+            var span1;
+            var span2;
+            if (footageValue !== '--') {
+                span1 = $('<span style="text-align:left">').text('FOOTAGE (ft)');
+            }
+            if (ropValue !== '--') {
+                span1 = $('<span style="text-align:left">').text('ROP (ft/hr)');
+            }
+            if (footageValue !== '--') {
+                span2 = $('<span style="float:right">').text('TARGET (ft/day)');
+            }
+            if (ropValue !== '--') {
+                span2 = $('<span style="float:right">').text('TARGET (ft/hr)');
+            }
+            var divValue = $('<div style="font-size:24px;color:#E7e7e7;padding:0px 14px 14px 14px;font-family: RobotoBold">');
+            var span3;
+            if (footageValue !== '--') {
+                span3 = $('<span style="text-align:left">').text(footageValue);
+            }
+            if (ropValue !== '--') {
+                span3 = $('<span style="text-align:left">').text(ropValue);
+            }
+            var span4 = $('<span style="float:right;padding-right:18px">').text(targetValue);
+            divTitle.append(span1).append(span2);
+            divValue.append(span3).append(span4);
+            divContent.append(divTitle).append(divValue);
+            divWarp.append(divContent);
+            return divWarp.html();
         }
+
     },
 
     mounted() {
         console.log('footage component mounted');
         this.chartDom = window.echarts.init(this.$refs.footageChart);
-        this.chartDom.setOption(this.adjustSizeOpt(this.getDefaultOptions()), true);
+        this.chartOption = this.getDefaultOptions();
+        this.chartOption.tooltip.formatter = this.tipFormatter;
+        this.chartDom.setOption(this.adjustSizeOpt(this.chartOption), true);
         window.addEventListener('resize', () => this.chartDom.resize())
     },
 
@@ -206,8 +313,8 @@ export default {
     },
 
     watch: {
-        '$store.getters.footage': function (footageData) {
-            console.log(footageData);
+        'chartData': function () {
+            this.updateChart();
         }
     }
 
