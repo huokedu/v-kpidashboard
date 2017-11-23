@@ -16,38 +16,13 @@
 </template>
 
 <script>
-import { DISPLAY_STATE_CHANNELS, RIGSTATE } from '@/util'
+import { DISPLAY_STATE_CHANNELS } from '@/util'
 
 export default {
   name: 'footer-bar',
-  data() {
-    return {
-      rigInfo: {
-        rigState: '--',
-        bitDepth: '--',
-        holeDepth: '--',
-        bitDepthUnit: 'ft',
-        holeDepthUnit: 'ft'
-      }
-    }
-  },
-
-  methods: {
-    update(resp) {
-      let rigInfo = { ...this.rigInfo };
-      for (let c of resp['lastValues']) {
-        if (c['mnemonic'] === 'DrillBoreHole.TD' && c['value']['value']) {
-          rigInfo.holeDepth = c['value']['value'].toFixed(2);
-          rigInfo.holeDepthTime = c['value']['time'];
-        }
-        if (c['mnemonic'] === 'DepthMonitoring.RBD' && c['value']['value']) {
-          rigInfo.bitDepth = c['value']['value'].toFixed(2);
-        }
-        if (c['mnemonic'] === 'DepthMonitoring.ACTIVITY') {
-          rigInfo.rigState = RIGSTATE[c['value']['value']] || '--';
-        }
-        this.rigInfo = rigInfo;
-      }
+  computed: {
+    rigInfo: function () {
+      return this.$store.getters.rigInfo;
     }
   },
 
@@ -58,12 +33,6 @@ export default {
         units: DISPLAY_STATE_CHANNELS.map(channel => channel.unit)
       });
     })
-  },
-
-  watch: {
-    '$store.getters.rigInfo': function (val) {
-      this.update(val);
-    }
   }
 }
 </script>

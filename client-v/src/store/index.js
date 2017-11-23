@@ -1,13 +1,20 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
+import { RIGSTATE } from '@/util'
 
 Vue.use(Vuex)
 
 const state = {
   appSettings: {},
   footageData: {},
-  rigInfoData: {},
+  rigInfoData: {
+    rigState: '--',
+    bitDepth: '--',
+    holeDepth: '--',
+    bitDepthUnit: 'ft',
+    holeDepthUnit: 'ft'
+  },
   wellInfoData: {}
 }
 
@@ -83,7 +90,20 @@ const actions = {
       .post(url, payload)
       .then((res) => {
         if (res && res.data) {
-          context.commit('updateRigInfo', res.data);
+          let rigInfo = { ...context.getters.rigInfo };
+          for (let c of res.data['lastValues']) {
+            if (c['mnemonic'] === 'DrillBoreHole.TD' && c['value']['value']) {
+              rigInfo.holeDepth = c['value']['value'].toFixed(2);
+              rigInfo.holeDepthTime = c['value']['time'];
+            }
+            if (c['mnemonic'] === 'DepthMonitoring.RBD' && c['value']['value']) {
+              rigInfo.bitDepth = c['value']['value'].toFixed(2);
+            }
+            if (c['mnemonic'] === 'DepthMonitoring.ACTIVITY') {
+              rigInfo.rigState = RIGSTATE[c['value']['value']] || '--';
+            }
+          }
+          context.commit('updateRigInfo', rigInfo);
         }
       })
       .catch(err => console.log(err));
