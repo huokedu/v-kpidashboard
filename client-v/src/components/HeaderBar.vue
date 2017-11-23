@@ -142,8 +142,6 @@ export default {
   .dropdown-toggle {
     background: transparent;
     border: none;
-    position: relative;
-    top: 5px;
   }
   .glyphicon-triangle-bottom {
     color: #009fc2;

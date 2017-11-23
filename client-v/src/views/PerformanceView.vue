@@ -3,10 +3,10 @@
         <div class="performance-view-col left-col">
           <div class="left-col-top">
             <div class="left-col-top-left">
-
+              <footage name="DAILY FOOTAGE"></footage>
             </div>
             <div class="left-col-top-right">
-
+              <footage name="ON-BOTTOM ROP"></footage>
             </div>
           </div>
           <div class="left-col-bottom">
@@ -23,6 +23,7 @@
 </template>
 
 <script>
+import Footage from '@/components/Footage'
 
 export default {
   name: 'performance-view',
@@ -31,6 +32,10 @@ export default {
       title: 'Performance View',
       config: ''
     }
+  },
+
+  components: {
+    Footage
   },
 
   mounted() {
@@ -48,6 +53,7 @@ export default {
 
   methods: {
     update() {
+      return 0;
     }
   }
 
