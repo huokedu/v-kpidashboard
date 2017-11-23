@@ -43,7 +43,6 @@ export default {
   data() {
     return {
       topTitle: 'Drilling Performance',
-      subTitle: '',
       username: ''
     }
   },
@@ -56,30 +55,22 @@ export default {
         case '/qcview':
           return '/ Stand Analysis'
       }
+    },
+
+    subTitle: function () {
+      return this.$store.getters.wellInfo.wellname;
     }
   },
 
   mounted() {
     this.$bus.on(this.$bus.E_SETTINGS, (settings) => {
-      this.updateSubTitle(settings);
+      this.$store.dispatch('getWellInfo');
     })
 
     this.updateProfile();
   },
 
   methods: {
-    updateSubTitle(settings) {
-      this.$http
-        .get(settings['Uri-Slb.Prism.Core.Service.Well-1'] + '/' + settings.wellID, { headers: { Authorization: 'Bearer ' + settings.serviceToken } })
-        .then((wellinfo) => {
-          if (wellinfo && wellinfo.data && wellinfo.data.data) {
-            let wellname = wellinfo.data.data.match(/<eml:Title>(.+?)<\/eml:Title>/)
-            this.subTitle = wellname ? wellname[1] : ''
-          }
-        })
-        .catch(err => console.log(err));
-    },
-
     updateProfile() {
       this.$http
         .get('/api/user')

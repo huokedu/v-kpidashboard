@@ -7,13 +7,15 @@ Vue.use(Vuex)
 const state = {
   appSettings: {},
   footageData: {},
-  rigInfoData: {}
+  rigInfoData: {},
+  wellInfoData: {}
 }
 
 const getters = {
   settings: state => Object.keys(state.appSettings).length ? { ...state.appSettings } : '',
   footage: state => Object.keys(state.footageData).length ? { ...state.footageData } : '',
-  rigInfo: state => Object.keys(state.rigInfoData).length ? { ...state.rigInfoData } : ''
+  rigInfo: state => Object.keys(state.rigInfoData).length ? { ...state.rigInfoData } : '',
+  wellInfo: state => Object.keys(state.wellInfoData).length ? { ...state.wellInfoData } : ''
 }
 
 const mutations = {
@@ -30,6 +32,11 @@ const mutations = {
   updateRigInfo: (state, rigInfoData) => {
     state.rigInfoData = { ...rigInfoData };
     return state.rigInfoData;
+  },
+
+  updateWellInfo: (state, wellInfoData) => {
+    state.wellInfoData = { ...wellInfoData };
+    return state.wellInfoData;
   }
 }
 
@@ -38,13 +45,13 @@ const actions = {
     axios.get('/api/appsettings')
       .then(res => {
         if (payload && payload.$route) {
-          res.data.wellID = payload.$route.query.wellID || res.data.debugWellID
-          res.data.wellboreID = payload.$route.query.wellboreID || ''
+          res.data.wellID = payload.$route.query.wellID || res.data.debugWellID;
+          res.data.wellboreID = payload.$route.query.wellboreID || '';
         }
 
-        context.commit('updateSettings', res.data)
+        context.commit('updateSettings', res.data);
         if (payload && payload.$bus) {
-          payload.$bus.emit(payload.$bus.E_SETTINGS, res.data)
+          payload.$bus.emit(payload.$bus.E_SETTINGS, res.data);
         }
       })
       .catch(err => console.log(err))
@@ -60,7 +67,7 @@ const actions = {
       .then(res => {
         if (res && res.data) {
           console.log(res.data);
-          context.commit('updateFootage', res.data)
+          context.commit('updateFootage', res.data);
         }
       })
       .catch(err => console.log(err));
@@ -73,13 +80,37 @@ const actions = {
       return;
     }
     axios
-    .post(url, payload)
-    .then((wellinfo) => {
-      if (wellinfo && wellinfo.data) {
-        context.commit('updateRigInfo', wellinfo.data)
-      }
-    })
-    .catch(err => console.log(err));
+      .post(url, payload)
+      .then((res) => {
+        if (res && res.data) {
+          context.commit('updateRigInfo', res.data);
+        }
+      })
+      .catch(err => console.log(err));
+  },
+
+  getWellInfo(context, payload) {
+    let url = context.getters.settings['Uri-Slb.Prism.Core.Service.Well-1'] + '/' + context.getters.settings.wellID;
+    if (!url) {
+      console.log('invalid well service url');
+      return;
+    }
+    axios
+      .get(url)
+      .then((res) => {
+        if (res && res.data && res.data.data) {
+          let name = res.data.data.match(/<eml:Title>(.+?)<\/eml:Title>/);
+          let timeZone = res.data.data.match(/<witsml:TimeZone>(.+?)<\/witsml:TimeZone>/);
+          let timeZoneH = parseInt(timeZone[1].split(':')[0]);
+          let timeZoneM = parseInt(timeZone[1].split(':')[1]);
+          let wellInfo = {
+            wellname: name ? name[1] : '',
+            rigTimezone: timeZoneH > 0 ? timeZoneH + timeZoneM / 60 : timeZoneH - timeZoneM / 60
+          };
+          context.commit('updateWellInfo', wellInfo)
+        }
+      })
+      .catch(err => console.log(err));
   }
 }
 
