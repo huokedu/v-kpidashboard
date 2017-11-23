@@ -14,6 +14,17 @@ Vue.prototype.$http = axios
 Vue.use(Bus)
 Vue.config.productionTip = false
 
+// inject header info to ajax request
+axios.interceptors.request.use(function (config) {
+  if (store.getters.settings) {
+    config.headers['Authorization'] = `Bearer ${store.getters.settings.serviceToken}`;
+    config.headers['slb-wellId'] = `${store.getters.settings.wellID}`;
+  }
+  return config;
+}, function (err) {
+  return Promise.reject(err);
+});
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

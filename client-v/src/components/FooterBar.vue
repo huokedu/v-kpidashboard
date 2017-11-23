@@ -53,22 +53,18 @@ export default {
 
   mounted() {
     this.$bus.on(this.$bus.E_SETTINGS, (settings) => {
-      let rigInfoUrl = settings['Uri-Slb.Prism.RO.Service.DrillingApi.TimeData-1'] + '/2015/TimeData/GetLastValue';
-      let postData = {
+      this.$store.dispatch('getRigInfo', {
         mnemonics: DISPLAY_STATE_CHANNELS.map(channel => channel.name),
         units: DISPLAY_STATE_CHANNELS.map(channel => channel.unit)
-      };
-      this.$http
-        .post(rigInfoUrl, postData, { headers: { Authorization: 'Bearer ' + settings.serviceToken, 'slb-wellId': settings.wellID } })
-        .then((wellinfo) => {
-          if (wellinfo && wellinfo.data) {
-            this.update(wellinfo.data);
-          }
-        })
-        .catch(err => console.log(err));
+      });
     })
-  }
+  },
 
+  watch: {
+    '$store.getters.rigInfo': function (val) {
+      this.update(val);
+    }
+  }
 }
 </script>
 
