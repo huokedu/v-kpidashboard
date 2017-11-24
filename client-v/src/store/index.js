@@ -17,7 +17,8 @@ const state = {
     holeDepthTime: ''
   },
   wellInfoData: {},
-  projectedData: {}
+  projectedData: {},
+  targetData: {}
 }
 
 const getters = {
@@ -25,7 +26,8 @@ const getters = {
   footage: state => state.footageData.length ? [...state.footageData] : [],
   rigInfo: state => Object.keys(state.rigInfoData).length ? { ...state.rigInfoData } : '',
   wellInfo: state => Object.keys(state.wellInfoData).length ? { ...state.wellInfoData } : '',
-  projected: state => Object.keys(state.projectedData).length ? { ...state.projectedData } : ''
+  projected: state => Object.keys(state.projectedData).length ? { ...state.projectedData } : '',
+  target: state => Object.keys(state.targetData).length ? { ...state.targetData } : ''
 }
 
 const mutations = {
@@ -52,6 +54,11 @@ const mutations = {
   updateProject: (state, projectedData) => {
     state.projectedData = { ...projectedData };
     return state.projectedData;
+  },
+
+  updateTarget: (state, targetData) => {
+    state.targetData = { ...targetData };
+    return state.targetData;
   }
 }
 
@@ -135,6 +142,18 @@ const actions = {
       .then((res) => {
         if (res && res.data) {
           context.commit('updateProject', res.data);
+        }
+      })
+      .catch(err => console.log(err));
+  },
+
+  getTarget(context, payload) {
+    let url = context.getters.settings['Uri-Slb.Prism.Rhapsody.Service.Targets-2'] + '/targets?model.wellId=' + context.getters.settings.wellID + '&model.lengthUnit=ft&model.ropUnit=ft%2Fhr';
+    axios
+      .get(url)
+      .then((res) => {
+        if (res && res.data) {
+          context.commit('updateTarget', res.data);
         }
       })
       .catch(err => console.log(err));

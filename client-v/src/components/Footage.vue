@@ -31,7 +31,7 @@
                     <div class="projected-target-value">
                         <span class="projected-value" :class="{'projected-value-alert':isAlert}">{{projectedFootage.value}}</span>
                         <span class="value-splitter">/</span>
-                        <span class="target-value"></span>
+                        <span class="target-value">{{currentTarget.value}}</span>
                     </div>
                 </div>
             </div>
@@ -104,6 +104,26 @@ export default {
                 return {
                     value: this.convertValue(projected.projectFootage),
                     unit: projected.footageUnit
+                }
+            }
+        },
+
+        currentTarget: function () {
+            if (!this.$store.getters.target) {
+                return { value: '--', unit: '' };
+            }
+            let t = { ...this.$store.getters.target };
+            let curTarget = t.data.find(it => it.state === 'Active');
+
+            if (this.kind === 'ROP') {
+                return {
+                    value: parseFloat(curTarget.targetOnBottomRop).toFixed(1),
+                    unit: t.ropUnit
+                }
+            } else {
+                return {
+                    value: parseFloat(curTarget.targetFootage).toFixed(1),
+                    unit: t.lengthUnit
                 }
             }
         }
@@ -310,6 +330,33 @@ export default {
             divContent.append(divTitle).append(divValue);
             divWarp.append(divContent);
             return divWarp.html();
+        },
+
+        getLastDaysTargets(targetList, currentDateString, lastDaysCount = 5) {
+            if (!targetList || !currentDateString || !targetList.length) {
+                return [];
+            }
+
+            let lastDaysDate = [];
+            for (let i = lastDaysCount; i > 0; i--) {
+                let currentDate = new Date(currentDateString);
+                let currentTargetDate = new Date(new Date(currentDate.setHours(0)).setMinutes(0)).setSeconds(0);
+                lastDaysDate.push(currentDate.setDate(new Date(currentTargetDate).getDate() - i));
+            }
+            let lastDaysTargets = [];
+            for (var j = 0; j < lastDaysDate.length; j++) {
+                let tar = targetList.find((t) => {
+                    let targetStartTime = new Date(new Date(new Date(t.startDate).setHours(0)).setMinutes(0)).setSeconds(0);
+                    if (t.state === 'Historical') {
+                        return (Number(new Date(targetStartTime)) <= lastDaysDate[j] && lastDaysDate[j] <= Number(new Date(t.endDate)));
+                    }
+                    if (t.state === 'Active') {
+                        return (Number(new Date(targetStartTime)) <= lastDaysDate[j]);
+                    }
+                });
+                lastDaysTargets.push(tar);
+            }
+            return lastDaysTargets;
         }
 
     },

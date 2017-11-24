@@ -43,6 +43,7 @@ export default {
     this.$bus.on(this.$bus.E_SETTINGS, (settings) => {
       this.config = settings;
       this.$store.dispatch('getProjected');
+      this.$store.dispatch('getTarget');
     });
   },
 
