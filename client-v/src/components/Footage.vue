@@ -29,7 +29,7 @@
                 <div class="projected">
                     <div class="projected-title">PROJECTED/TARGET(ft/day)</div>
                     <div class="projected-target-value">
-                        <span class="projected-value" :class="{'projected-value-alert':isAlert}">--</span>
+                        <span class="projected-value" :class="{'projected-value-alert':isAlert}">{{projectedFootage.value}}</span>
                         <span class="value-splitter">/</span>
                         <span class="target-value"></span>
                     </div>
@@ -90,6 +90,21 @@ export default {
                     value: this.convertValue(cf.drilledFootage) || '--',
                     unit: 'ft' || cf.footageUnit || '--'
                 };
+            }
+        },
+
+        projectedFootage: function () {
+            let projected = { ...this.$store.getters.projected };
+            if (this.kind === 'ROP') {
+                return {
+                    value: this.convertValue(projected.projectRop),
+                    unit: projected.ropUnit
+                }
+            } else {
+                return {
+                    value: this.convertValue(projected.projectFootage),
+                    unit: projected.footageUnit
+                }
             }
         }
     },

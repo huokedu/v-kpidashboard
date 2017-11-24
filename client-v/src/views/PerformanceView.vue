@@ -42,6 +42,7 @@ export default {
   mounted() {
     this.$bus.on(this.$bus.E_SETTINGS, (settings) => {
       this.config = settings;
+      this.$store.dispatch('getProjected');
     });
   },
 
@@ -84,7 +85,7 @@ export default {
         'ropType': 'OnBottom',
         'dates': this.getTimeList(this.$store.getters.rigInfo.holeDepthTime)
       }
-      this.$store.dispatch('getFootage', postData)
+      this.$store.dispatch('getFootage', postData);
     }
   }
 }
