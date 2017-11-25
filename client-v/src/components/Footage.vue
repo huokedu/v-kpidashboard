@@ -126,6 +126,13 @@ export default {
                     unit: t.lengthUnit
                 }
             }
+        },
+
+        previousTarget: function () {
+            if (!this.$store.getters.target || !this.$store.getters.rigInfo.holeDepthTime) {
+                return [];
+            }
+            return this.getLastDaysTargets(this.$store.getters.target.data, this.$store.getters.rigInfo.holeDepthTime);
         }
     },
 
@@ -377,6 +384,25 @@ export default {
     watch: {
         'chartData': function () {
             this.updateChart();
+        },
+        'previousTarget': function (val) {
+            if (!val || !val.length) {
+                return;
+            }
+
+            let previousTargets = val;
+            let previousFootageTarget = previousTargets.map(it => it.targetFootage);
+            let previousROPTarget = previousTargets.map(it => it.targetOnBottomRop);
+
+            var opt = this.chartOption;
+            if (this.kind === 'ROP') {
+                opt.series[1].data = previousROPTarget;
+                opt.series[3].data = previousROPTarget;
+            } else {
+                opt.series[1].data = previousFootageTarget;
+                opt.series[3].data = previousFootageTarget;
+            }
+            this.chartDom.setOption(opt);
         }
     }
 

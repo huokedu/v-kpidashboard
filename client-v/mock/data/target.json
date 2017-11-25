@@ -10,8 +10,8 @@
             "targetAverageRop": "",
             "targetOnBottomRop": "110",
             "inclination": "",
-            "startDate": "2017-09-19T17:27:11.743+08:00",
-            "endDate": "2017-09-19T17:27:11.743+08:00",
+            "startDate": "2017-02-01T00:27:11.743Z",
+            "endDate": "2017-02-01T23:27:11.743Z",
             "lastUpdate": "2017-09-19T09:27:10.728Z"
         },
         {
@@ -23,9 +23,9 @@
             "targetAverageRop": "",
             "targetOnBottomRop": "100",
             "inclination": "",
-            "startDate": "2017-09-19T17:27:12.743+08:00",
-            "endDate": "2017-09-19T17:27:12.743+08:00",
-            "lastUpdate": "2017-09-19T09:27:10.728Z"
+            "startDate": "2017-02-02T00:27:12.743Z",
+            "endDate": "2017-02-02T23:27:12.743Z",
+            "lastUpdate": "2017-02-02T09:27:10.728Z"
         },
         {
             "id": "097adf49-ea37-4411-bdb8-e7b3eb902451",
@@ -36,8 +36,8 @@
             "targetAverageRop": "",
             "targetOnBottomRop": "120",
             "inclination": "",
-            "startDate": "2017-09-19T17:27:10.743+08:00",
-            "endDate": "9000-12-31T23:59:59+08:00",
+            "startDate": "2017-02-03T17:27:10.743Z",
+            "endDate": "2017-02-03T23:59:59Z",
             "lastUpdate": "2017-09-19T09:27:10.728Z"
         },
         {
@@ -49,8 +49,8 @@
             "targetAverageRop": "",
             "targetOnBottomRop": "90",
             "inclination": "",
-            "startDate": "2017-09-19T17:27:13.743+08:00",
-            "endDate": "2017-09-19T17:27:13.743+08:00",
+            "startDate": "2017-02-04T00:27:13.743Z",
+            "endDate": "2017-02-04T23:27:13.743Z",
             "lastUpdate": "2017-09-19T09:27:10.728Z"
         },
         {
@@ -62,8 +62,8 @@
             "targetAverageRop": "",
             "targetOnBottomRop": "90",
             "inclination": "",
-            "startDate": "2017-09-19T17:27:14.743+08:00",
-            "endDate": "2017-09-19T17:27:14.743+08:00",
+            "startDate": "2017-02-05T00:27:14.743Z",
+            "endDate": "2017-02-05T23:27:14.743Z",
             "lastUpdate": "2017-09-19T09:27:10.728Z"
         },
         {
@@ -75,8 +75,8 @@
             "targetAverageRop": "",
             "targetOnBottomRop": "50",
             "inclination": "",
-            "startDate": "2017-09-19T17:27:15.743+08:00",
-            "endDate": "2017-09-19T17:27:15.743+08:00",
+            "startDate": "2017-02-06T00:27:15.743Z",
+            "endDate": "2017-02-06T23:27:15.743Z",
             "lastUpdate": "2017-09-19T09:27:10.728Z"
         }
     ]
