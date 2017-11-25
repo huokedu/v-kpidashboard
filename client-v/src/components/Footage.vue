@@ -23,7 +23,7 @@
             </div>
             <div class="info-row">
                 <div class="current">
-                    <div class="current-title">CURRENT ({{currentFootage.unit}})</div>
+                    <div class="current-title">CURRENT({{currentFootage.unit}})</div>
                     <div class="current-value">{{currentFootage.value}}</div>
                 </div>
                 <div class="projected">

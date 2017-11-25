@@ -111,13 +111,13 @@ export default {
     margin-bottom: 10px;
     display: flex;
     .left-col-top-left {
-      width: 50%;
+      width: calc(50% - 5px);
       background: white;
       height: 100%;
       margin-right: 5px;
     }
     .left-col-top-right {
-      width: 50%;
+      width: calc(50% - 5px);
       background: white;
       height: 100%;
       margin-left: 5px;
